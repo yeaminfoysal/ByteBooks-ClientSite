@@ -1,11 +1,11 @@
 
-import { Button } from './components/ui/button'
+import Navbar from './components/Navbar'
 
 function App() {
 
   return (
     <div className="mt-10 ml-10">
-      <Button > Hello world</Button>
+      <Navbar/>
     </div>
   )
 }
