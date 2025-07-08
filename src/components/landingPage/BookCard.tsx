@@ -46,11 +46,11 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
   };
 
   return (
-    <Card className="group relative overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl border-0 bg-white">
+    <Card className="group relative overflow-hidden transition-all duration-300  hover:shadow-2xl border-0">
       <CardContent className="p-0">
         {/* Book Image Placeholder */}
-        <div className="relative aspect-[3/4] overflow-hidden">
-          <div className={`absolute inset-0 bg-gradient-to-br ${getBookColor(book.title)} opacity-90`} />
+        <div className="relative aspect-[1] overflow-hidden group-hover:scale-105 transition-all duration-300">
+          <div className={`absolute inset-0 bg-gradient-to-br ${getBookColor(book.title)} opacity-80`} />
           
           {/* Book Icon */}
           <div className="absolute top-4 right-4">
@@ -59,7 +59,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
           
           {/* Book Title on Image */}
           <div className="absolute inset-0 flex items-center justify-center p-6">
-            <h3 className="text-white text-xl font-bold text-center leading-tight drop-shadow-lg">
+            <h3 className=" text-2xl font-extrabold text-center leading-tight drop-shadow-lg">
               {book.title}
             </h3>
           </div>
@@ -69,7 +69,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
             <Button
               size="sm"
               variant="secondary"
-              className="h-8 w-8 p-0 bg-white/90 hover:bg-white"
+              className="h-8 w-8 p-0 hover:bg-white"
               onClick={() => onUpdate(book)}
             >
               <Edit2 className="w-4 h-4" />
@@ -86,14 +86,14 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
           
           {/* Genre Badge */}
           <div className="absolute bottom-4 right-4">
-            <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+            <Badge variant="secondary" className="">
               {book.genre}
             </Badge>
           </div>
         </div>
       </CardContent>
       
-      <CardFooter className="p-6 space-y-3">
+      <CardFooter className="p-6 flex-col space-y-3">
         {/* Author */}
         <div className="w-full">
           <p className="text-sm text-muted-foreground">by {book.author}</p>
@@ -101,7 +101,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
         
         {/* Description */}
         <div className="w-full">
-          <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
+          <p className="text-sm line-clamp-3 leading-relaxed">
             {book.description}
           </p>
         </div>

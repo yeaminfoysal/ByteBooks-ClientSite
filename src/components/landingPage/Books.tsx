@@ -44,38 +44,38 @@ function App() {
             {/* Stats */}
             <div className="max-w-7xl mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-lg p-6 shadow-sm">
+                    <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
                         <div className="flex items-center gap-4">
                             <div className="bg-blue-100 p-3 rounded-full">
                                 <Library className="w-6 h-6 text-blue-600" />
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600">Total Books</p>
-                                <p className="text-2xl font-bold text-gray-900">{books.length}</p>
+                                <p className="text-sm ">Total Books</p>
+                                <p className="text-2xl font-bold">{books.length}</p>
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white rounded-lg p-6 shadow-sm">
+                    <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
                         <div className="flex items-center gap-4">
                             <div className="bg-green-100 p-3 rounded-full">
                                 <Library className="w-6 h-6 text-green-600" />
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600">Total Copies</p>
-                                <p className="text-2xl font-bold text-gray-900">
+                                <p className="text-sm ">Total Copies</p>
+                                <p className="text-2xl font-bold">
                                     {books.reduce((total, book) => total + book.copies, 0)}
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white rounded-lg p-6 shadow-sm">
+                    <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
                         <div className="flex items-center gap-4">
                             <div className="bg-purple-100 p-3 rounded-full">
                                 <Library className="w-6 h-6 text-purple-600" />
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600">Unique Genres</p>
-                                <p className="text-2xl font-bold text-gray-900">
+                                <p className="text-sm ">Unique Genres</p>
+                                <p className="text-2xl font-bold">
                                     {new Set(books.map(book => book.genre)).size}
                                 </p>
                             </div>
