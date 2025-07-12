@@ -1,6 +1,9 @@
+import { BooksTable } from "@/components/AllBooks/BooksTable";
 
 export default function AllBooks() {
   return (
-    <div>AllBooks</div>
+    <div>
+      <BooksTable />
+    </div>
   )
 }

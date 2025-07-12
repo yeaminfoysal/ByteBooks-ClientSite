@@ -11,7 +11,7 @@ function App() {
         isFetching,
         isLoading,
     } = useGetBooksQuery(undefined, {
-        pollingInterval: 3000,
+        // pollingInterval: 3000,
         refetchOnMountOrArgChange: true,
         skip: false,
     })
