@@ -10,9 +10,16 @@ export const baseApi = createApi({
     getBooks: builder.query({
       query: () => `/books`,
     }),
+    createBook: builder.mutation({
+      query: (bookData) => ({
+        url: `books`,
+        method: 'POST',
+        body: bookData,
+      }),
+    }),
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBooksQuery } = baseApi
+export const { useGetBooksQuery, useCreateBookMutation } = baseApi

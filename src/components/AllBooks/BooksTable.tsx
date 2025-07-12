@@ -43,7 +43,7 @@ export function BooksTable() {
     const [rowSelection, setRowSelection] = React.useState({})
     const { data: books = [], isFetching, isLoading } = useGetBooksQuery(undefined);
     const data: Book[] = books?.data || [];
-
+    console.log(data);
     const table = useReactTable({
         data,
         columns,
