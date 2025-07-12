@@ -4,7 +4,7 @@ import { ModeToggle } from './mode-toggle'
 export default function Navbar() {
     const navlinks = [
         { path: '/books', label: 'All Books' },
-        { path: '/create-books', label: 'Add Book' },
+        { path: '/create-book', label: 'Add Book' },
         { path: '/borrow-summary', label: 'Borrow Summary' },
     ]
 

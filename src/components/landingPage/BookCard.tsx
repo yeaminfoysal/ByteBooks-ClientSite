@@ -24,7 +24,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
       'from-teal-400 to-cyan-600',
       'from-amber-400 to-orange-600',
     ];
-    
+
     const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return colors[hash % colors.length];
   };
@@ -40,32 +40,32 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
       'text-teal-200',
       'text-amber-200',
     ];
-    
+
     const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return colors[hash % colors.length];
   };
 
   return (
-    <Card className="group relative overflow-hidden transition-all duration-300  hover:shadow-2xl border-0">
+    <Card className="group relative overflow-hidden hover:shadow-2xl border-0">
       <CardContent className="p-0">
         {/* Book Image Placeholder */}
-        <div className="relative aspect-[1] overflow-hidden group-hover:scale-105 transition-all duration-300">
-          <div className={`absolute inset-0 bg-gradient-to-br ${getBookColor(book.title)} opacity-80`} />
-          
+        <div className="relative aspect-[1] overflow-hidden group-hover:scale-105 transition-all duration-200">
+          <div className={`absolute inset-0 bg-gradient-to-br ${getBookColor(book.title)} opacity-80 w-[85%] mx-auto rounded-lg`} />
+
           {/* Book Icon */}
-          <div className="absolute top-4 right-4">
-            <BookOpen className={`w-8 h-8 ${getIconColor(book.title)} opacity-60`} />
+          <div className="absolute top-14 right-12">
+            <BookOpen className={`w-48 h-48 ${getIconColor(book.title)} opacity-20`} />
           </div>
-          
+
           {/* Book Title on Image */}
           <div className="absolute inset-0 flex items-center justify-center p-6">
-            <h3 className=" text-2xl font-extrabold text-center leading-tight drop-shadow-lg">
+            <h3 className=" text-xl font-bold text-center leading-tight drop-shadow-lg">
               {book.title}
             </h3>
           </div>
-          
+
           {/* Action Buttons - Hidden by default, shown on hover */}
-          <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-2">
+          <div className="absolute top-4 left-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-x-2">
             <Button
               size="sm"
               variant="secondary"
@@ -83,29 +83,29 @@ const BookCard: React.FC<BookCardProps> = ({ book, onUpdate, onDelete }) => {
               <Trash2 className="w-4 h-4" />
             </Button>
           </div>
-          
+
           {/* Genre Badge */}
-          <div className="absolute bottom-4 right-4">
+          <div className="absolute bottom-4 right-8">
             <Badge variant="secondary" className="">
               {book.genre}
             </Badge>
           </div>
         </div>
       </CardContent>
-      
+
       <CardFooter className="p-6 flex-col space-y-3">
         {/* Author */}
         <div className="w-full">
           <p className="text-sm text-muted-foreground">by {book.author}</p>
         </div>
-        
+
         {/* Description */}
         <div className="w-full">
           <p className="text-sm line-clamp-3 leading-relaxed">
             {book.description}
           </p>
         </div>
-        
+
         {/* Footer Info */}
         <div className="w-full flex items-center justify-between pt-2">
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
