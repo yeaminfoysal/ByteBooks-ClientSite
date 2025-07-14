@@ -1,101 +1,85 @@
 import { useGetBookDetailsQuery } from "@/redux/api/baseApi";
 import { useParams } from "react-router";
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Users } from "lucide-react";
 
 export default function BookDetails() {
-
   const params = useParams();
-  const id = params.id
-  const { data, isFetching, isLoading } = useGetBookDetailsQuery({ id })
+  const id = params.id;
+  const { data, isFetching, isLoading } = useGetBookDetailsQuery({ id });
   const book = data?.data;
 
-  console.log(book);
   const getBookColor = (title: string) => {
     const colors = [
-      'from-rose-400 to-pink-600',
-      'from-blue-400 to-cyan-600',
-      'from-green-400 to-emerald-600',
-      'from-purple-400 to-violet-600',
-      'from-orange-400 to-red-600',
-      'from-indigo-400 to-blue-600',
-      'from-teal-400 to-cyan-600',
-      'from-amber-400 to-orange-600',
+      "from-rose-400 to-pink-600",
+      "from-blue-400 to-cyan-600",
+      "from-green-400 to-emerald-600",
+      "from-purple-400 to-violet-600",
+      "from-orange-400 to-red-600",
+      "from-indigo-400 to-blue-600",
+      "from-teal-400 to-cyan-600",
+      "from-amber-400 to-orange-600",
     ];
-
-    const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const hash = title?.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
     return colors[hash % colors.length];
   };
 
   const getIconColor = (title: string) => {
     const colors = [
-      'text-rose-200',
-      'text-blue-200',
-      'text-green-200',
-      'text-purple-200',
-      'text-orange-200',
-      'text-indigo-200',
-      'text-teal-200',
-      'text-amber-200',
+      "text-rose-200",
+      "text-blue-200",
+      "text-green-200",
+      "text-purple-200",
+      "text-orange-200",
+      "text-indigo-200",
+      "text-teal-200",
+      "text-amber-200",
     ];
-
-    const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const hash = title?.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
     return colors[hash % colors.length];
   };
 
-  if (isLoading || isFetching) return <p>Loading...</p>;
+  if (isLoading || isFetching) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
 
   return (
-    <Card className="group relative overflow-hidden hover:shadow-2xl border-0">
-      <CardContent className="p-0">
-        {/* Book Image Placeholder */}
-        <div className="relative aspect-[1] overflow-hidden group-hover:scale-105 transition-all duration-200">
-          <div className={`absolute inset-0 bg-gradient-to-br ${getBookColor(book?.title)} opacity-80 w-[85%] mx-auto rounded-lg`} />
-
-          {/* Book Icon */}
-          <div className="absolute top-28 right-12">
-            <BookOpen className={`w-48 h-30 ${getIconColor(book?.title)} opacity-100`} />
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <Card className="flex flex-col md:flex-row overflow-hidden shadow-xl rounded-2xl">
+        {/* Left Section - Image/Visual */}
+        <div className="relative md:w-1/3 w-full h-80 ">
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${getBookColor(
+              book?.title
+            )} opacity-90 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none`}
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <BookOpen className={`w-44 h-44 ${getIconColor(book?.title)} opacity-90`} />
           </div>
-
-          {/* Book Title on Image */}
-          <div className="absolute inset-0 flex justify-center p-6 pt-12">
-            <h3 className=" text-xl font-semibold text-center leading-tight drop-shadow-lg">
-              {book?.title}
-            </h3>
-          </div>
-          {/* Genre Badge */}
-          {/* <div className="absolute bottom-4 right-8">
-            <Badge variant="secondary" className="">
-              {book.genre}
-            </Badge>
-          </div> */}
-        </div>
-      </CardContent>
-
-      <CardFooter className="p-6 flex-col space-y-3">
-        {/* Author */}
-        {/* <div className="w-full">
-          <p className="text-sm text-muted-foreground">by {book.author}</p>
-        </div> */}
-
-        {/* Description */}
-        {/* <div className="w-full">
-          <p className="text-sm line-clamp-3 leading-relaxed">
-            {book.description}
-          </p>
-        </div> */}
-
-        {/* Footer Info */}
-        <div className="w-full">
-          <div className="flex text-sm mb-2 items-center gap-1 text-muted-foreground">
-            <Users className="w-4 h-4" />
-            <span>Borrowed : {book?.totalQuantity} copies</span>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            ISBN: {book?.isbn}
+          <div className="absolute bottom-4 w-full text-center px-4">
+            <h3 className="text-white text-xl font-bold drop-shadow">{book?.title}</h3>
           </div>
         </div>
-      </CardFooter>
-    </Card>
+
+        {/* Right Section - Content */}
+        <CardContent className="p-6 flex flex-col gap-4 md:w-2/3">
+          {/* Title */}
+          <div>
+            <h2 className="text-2xl font-semibold">{book?.title}</h2>
+            <p className="text-muted-foreground text-sm mt-4">by {book?.author}</p>
+          </div>
+
+          {/* Description */}
+          <p className="text-sm text-gray-600 leading-relaxed">{book?.description}</p>
+
+          {/* Additional Info */}
+          <div className="mt-auto flex flex-col gap-2 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              <span>{book.copies ? "Available" : "Not Available"} {book?.copies} copies</span>
+            </div>
+            <div>ISBN: {book?.isbn}</div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
