@@ -1,6 +1,7 @@
 import App from "@/App";
 import AddBooks from "@/pages/AddBooks";
 import AllBooks from "@/pages/AllBooks";
+import BorrowSummary from "@/pages/BorrowSummary";
 import LandingPage from "@/pages/LandingPage";
 import {
     createBrowserRouter,
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path: '/create-book',
                 Component: AddBooks
+            },
+            {
+                path: '/borrow-summary',
+                Component: BorrowSummary
             }
         ]
     },

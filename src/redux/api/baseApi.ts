@@ -17,9 +17,12 @@ export const baseApi = createApi({
         body: bookData,
       }),
     }),
+    getBorrowSummary: builder.query({
+      query: () => '/borrow'
+    })
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBooksQuery, useCreateBookMutation } = baseApi
+export const { useGetBooksQuery, useCreateBookMutation, useGetBorrowSummaryQuery } = baseApi
