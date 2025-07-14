@@ -53,19 +53,28 @@ export function AddBooksForm() {
         icon: "success",
         title: "Book has been saved",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
       form.reset(); // optional
-    } catch (error) {
+    } catch (error: unknown) {
+      // Use type guard to narrow the error
+      if (typeof error === "object" && error !== null && "data" in error) {
+        const err = error as { data?: { message?: string }; message?: string };
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.data?.message || err.message || "Something went wrong",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "An unexpected error occurred",
+        });
+      }
       console.error("❌ Error submitting book:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: `${error?.data?.message}`,
-      });
     }
   };
-
 
   return (
     <Form {...form}>
