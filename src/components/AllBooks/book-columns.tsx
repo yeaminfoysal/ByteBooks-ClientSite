@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import type { ColumnDef } from "@tanstack/react-table"
 import type { Book } from "@/types/books"
+import { Link } from "react-router"
 
 
 export const columns: ColumnDef<Book>[] = [
@@ -51,7 +52,8 @@ export const columns: ColumnDef<Book>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const book = row.original
+      const book = row.original;
+      const id = book._id;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -66,7 +68,9 @@ export const columns: ColumnDef<Book>[] = [
               Copy Book ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View Details</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to={`/books/${id}`}>View Details</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Edit Book</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
