@@ -8,8 +8,8 @@ import { useGetBooksQuery } from '@/redux/api/baseApi';
 function App() {
     const {
         data,
-        isFetching,
-        isLoading,
+        // isFetching,
+        // isLoading,
     } = useGetBooksQuery(undefined, {
         // pollingInterval: 3000,
         refetchOnMountOrArgChange: true,
@@ -17,26 +17,9 @@ function App() {
     })
     //   const [books, setBooks] = useState<Book[]>(sampleBooks);
     //   const { toast } = useToast();
-    console.log(data, isFetching, isLoading);
+    // console.log(data, isFetching, isLoading);
+
     const books: Book[] = data?.data || [];
-
-    const handleUpdateBook = () => {
-        // toast({
-        //     title: 'Update Book',
-        //     description: `Update functionality for "${book.title}" would be implemented here.`,
-        // });
-    };
-
-    const handleDeleteBook = () => {
-        // const bookToDelete = books.find(b => b._id === bookId);
-        // setBooks(books.filter(book => book._id !== bookId));
-
-        // toast({
-        //     title: 'Book Deleted',
-        //     description: `"${bookToDelete?.title}" has been removed from the library.`,
-        //     variant: 'destructive',
-        // });
-    };
 
     return (
         <div className="min-h-screen ">
@@ -86,8 +69,6 @@ function App() {
                 {/* Book Grid */}
                 <BookGrid
                     books={books}
-                    onUpdateBook={handleUpdateBook}
-                    onDeleteBook={handleDeleteBook}
                 />
             </div>
         </div>

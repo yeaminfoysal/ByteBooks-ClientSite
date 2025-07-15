@@ -1,13 +1,16 @@
 import { useGetBookDetailsQuery } from "@/redux/api/baseApi";
 import { useParams } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { BookOpen, Users } from "lucide-react";
+import { BorrowModal } from "@/components/BookDetails/BorrowModalForm";
 
 export default function BookDetails() {
   const params = useParams();
   const id = params.id;
   const { data, isFetching, isLoading } = useGetBookDetailsQuery({ id });
   const book = data?.data;
+  console.log(book);
 
   const getBookColor = (title: string) => {
     const colors = [
@@ -42,10 +45,11 @@ export default function BookDetails() {
   if (isLoading || isFetching) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+      {/* Book Card */}
       <Card className="flex flex-col md:flex-row overflow-hidden shadow-xl rounded-2xl">
-        {/* Left Section - Image/Visual */}
-        <div className="relative md:w-1/3 w-full h-80 ">
+        {/* Left Section - Visual */}
+        <div className="relative md:w-1/3 w-full h-80">
           <div
             className={`absolute inset-0 bg-gradient-to-br ${getBookColor(
               book?.title
@@ -61,7 +65,7 @@ export default function BookDetails() {
 
         {/* Right Section - Content */}
         <CardContent className="p-6 flex flex-col gap-4 md:w-2/3">
-          {/* Title */}
+          {/* Title & Author */}
           <div>
             <h2 className="text-2xl font-semibold">{book?.title}</h2>
             <p className="text-muted-foreground text-sm mt-4">by {book?.author}</p>
@@ -70,16 +74,27 @@ export default function BookDetails() {
           {/* Description */}
           <p className="text-sm text-gray-600 leading-relaxed">{book?.description}</p>
 
-          {/* Additional Info */}
+          {/* Info */}
           <div className="mt-auto flex flex-col gap-2 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              <span>{book.copies ? "Available" : "Not Available"} {book?.copies} copies</span>
+              <span>{book?.copies ? "Available" : "Not Available"} – {book?.copies} copies</span>
             </div>
             <div>ISBN: {book?.isbn}</div>
           </div>
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-end">
+            <Button variant="secondary" className="w-full sm:w-auto">
+              Update Book
+            </Button>
+            <Button variant="destructive" className="w-full sm:w-auto">
+              Delete Book
+            </Button>
+            <BorrowModal disable={!book?.available} bookId={book?._id} />
+          </div>
         </CardContent>
       </Card>
+
     </div>
   );
 }
