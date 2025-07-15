@@ -12,13 +12,15 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router";
-import { UpdateBookModal } from "../BookDetails/UpdateModalForm";
+import { UpdateBookModal } from "../BookDetails/UpdateBookModalForm";
 import type { Book } from "@/types/books";
 import { useDeleteBookMutation } from "@/redux/api/baseApi";
 import Swal from "sweetalert2";
+import { BorrowModal } from "../BookDetails/BorrowBookModalForm";
 
 export function ActionCell({ book }: { book: Book }) {
     const [openUpdate, setOpenUpdate] = useState(false);
+    const [openBorrow, setOpenBorrow] = useState(false)
     const [deleteBook] = useDeleteBookMutation();
 
     const handleDeleteBook = async (id: string) => {
@@ -65,9 +67,22 @@ export function ActionCell({ book }: { book: Book }) {
                     <DropdownMenuItem onClick={() => handleDeleteBook(book._id)}>
                         Delete Book
                     </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setOpenBorrow(true)}>
+                        Borrow Book
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
-            <UpdateBookModal book={book} open={openUpdate} setOpen={setOpenUpdate} />
+            <UpdateBookModal
+                book={book}
+                open={openUpdate}
+                setOpen={setOpenUpdate}
+            />
+            <BorrowModal
+                bookId={book?._id}
+                quantity={book.copies}
+                open={openBorrow}
+                setOpen={setOpenBorrow}
+            />
         </>
     );
 }

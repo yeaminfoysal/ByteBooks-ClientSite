@@ -3,19 +3,21 @@ import { useNavigate, useParams } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Edit2, Users } from "lucide-react";
-import { BorrowModal } from "@/components/BookDetails/BorrowModalForm";
-import { UpdateBookModal } from "@/components/BookDetails/UpdateModalForm";
+import { BorrowModal } from "@/components/BookDetails/BorrowBookModalForm";
+import { UpdateBookModal } from "@/components/BookDetails/UpdateBookModalForm";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import type { Book } from "@/types/books";
 
 export default function BookDetails() {
   const params = useParams();
   const id = params.id;
   const { data, isFetching, isLoading } = useGetBookDetailsQuery({ id });
-  const book = data?.data;
+  const book:Book = data?.data;
   const [deleteBook] = useDeleteBookMutation();
   const [openUpdate, setOpenUpdate] = useState(false);
   const navigate = useNavigate()
+  const [openBorrow, setOpenBorrow] = useState(false)
 
   const getBookColor = (title: string) => {
     const colors = [
@@ -125,11 +127,17 @@ export default function BookDetails() {
             <Button onClick={() => { handleDeleteBook(book._id) }} variant="destructive" className="w-full sm:w-auto">
               Delete Book
             </Button>
-            <BorrowModal disable={!book?.available} bookId={book?._id} />
+            <Button disabled={!book.available} onClick={() => setOpenBorrow(true)} variant="outline">Borrow</Button>
           </div>
         </CardContent>
       </Card>
 
+      <BorrowModal
+        bookId={book?._id}
+        quantity={book.copies}
+        open={openBorrow}
+        setOpen={setOpenBorrow}
+      />
     </div>
   );
 }

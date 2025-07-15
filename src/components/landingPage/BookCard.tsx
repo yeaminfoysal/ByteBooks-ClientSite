@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { BookOpen, Edit2, Trash2, Users, View } from 'lucide-react';
 import type { Book } from '@/types/books';
 import { useNavigate } from 'react-router';
-import { UpdateBookModal } from '../BookDetails/UpdateModalForm';
+import { UpdateBookModal } from '../BookDetails/UpdateBookModalForm';
 import Swal from 'sweetalert2';
 import { useDeleteBookMutation } from '@/redux/api/baseApi';
 
@@ -19,7 +19,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const navigate = useNavigate();
   const [openUpdate, setOpenUpdate] = useState(false);
   const [deleteBook] = useDeleteBookMutation();
-  
+
   const getBookColor = (title: string) => {
     const colors = [
       'from-rose-400 to-pink-600',

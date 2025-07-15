@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useCreateBookMutation } from "@/redux/api/baseApi"
+import { useNavigate } from "react-router"
 
 // ✅ Define form validation schema with Zod
 const formSchema = z.object({
@@ -43,11 +44,15 @@ export function AddBooksForm() {
     },
   })
   const [createBook] = useCreateBookMutation();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: BookFormValues) => {
     try {
       const response = await createBook(data).unwrap();
-      console.log("✅ Submitted Book:", response);
+      if (response.success) {
+        navigate("/books");
+      }
+
       Swal.fire({
         position: "top-end",
         icon: "success",

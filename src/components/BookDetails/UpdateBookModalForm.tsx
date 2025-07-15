@@ -96,7 +96,7 @@ export function UpdateBookModal({ book, open, setOpen }: IBook) {
               {...register("copies", {
                 required: "Copies is required",
                 valueAsNumber: true,
-                min: { value: 1, message: "Must be at least 1 copy" },
+                min: { value: 0, message: "Copies can not be negative" },
               })}
               className="col-span-3"
             />

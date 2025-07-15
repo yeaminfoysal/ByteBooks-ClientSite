@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
+    // DialogTrigger,
     DialogFooter,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -23,12 +23,14 @@ import { useNavigate } from "react-router";
 
 interface BorrowModalProps {
     bookId: string;
-    disable: boolean
+    open: boolean;
+    quantity: number,
+    setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export function BorrowModal({ bookId, disable }: BorrowModalProps) {
-    const [open, setOpen] = useState(false);
-    const [quantity, setQuantity] = useState<number>(1);
+export function BorrowModal({ bookId, quantity, open, setOpen }: BorrowModalProps) {
+    // const [open, setOpen] = useState(false);
+    const [borrowingQuantity, setborrowingQuantity] = useState<number>(1);
     const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
     const [error, setError] = useState<string>("");
     const [createBorrow] = useCreateBorrowMutation();
@@ -39,9 +41,13 @@ export function BorrowModal({ bookId, disable }: BorrowModalProps) {
             setError("Due date is required.");
             return;
         }
+        if (borrowingQuantity < 1 || borrowingQuantity > quantity) {
+            setError("Invalied quantity");
+            return;
+        }
         const borrowData = {
             book: bookId,
-            quantity,
+            quantity: borrowingQuantity,
             dueDate: dueDate.toISOString()
         }
         setError("");
@@ -54,9 +60,9 @@ export function BorrowModal({ bookId, disable }: BorrowModalProps) {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
+            {/* <DialogTrigger asChild>
                 <Button disabled={disable} variant="outline">Borrow</Button>
-            </DialogTrigger>
+            </DialogTrigger> */}
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Borrow Book</DialogTitle>
@@ -71,8 +77,8 @@ export function BorrowModal({ bookId, disable }: BorrowModalProps) {
                             id="quantity"
                             type="number"
                             min={1}
-                            value={quantity}
-                            onChange={(e) => setQuantity(Number(e.target.value))}
+                            value={borrowingQuantity}
+                            onChange={(e) => setborrowingQuantity(Number(e.target.value))}
                             className="col-span-3"
                         />
                     </div>
