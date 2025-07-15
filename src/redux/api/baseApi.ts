@@ -6,9 +6,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://mongoose-assignment3-server.vercel.app/api' }),
+  tagTypes: ["Books"],
+
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => `/books`,
+      providesTags: ['Books']
     }),
     createBook: builder.mutation({
       query: (bookData) => ({
@@ -21,7 +24,8 @@ export const baseApi = createApi({
       query: () => '/borrow'
     }),
     getBookDetails: builder.query({
-      query: ({ id }) => `/books/${id}`
+      query: ({ id }) => `/books/${id}`,
+      providesTags: ['Books']
     }),
     createBorrow: builder.mutation({
       query: (borrowData) => ({
@@ -29,6 +33,14 @@ export const baseApi = createApi({
         method: 'POST',
         body: borrowData
       })
+    }),
+    updateBook: builder.mutation({
+      query: ({ bookId, book }) => ({
+        url: `/books/${bookId}`,
+        method: 'PATCH',
+        body: book
+      }),
+      invalidatesTags: ["Books"],
     })
   }),
 })
@@ -41,5 +53,6 @@ export const {
   useCreateBookMutation,
   useGetBorrowSummaryQuery,
   useGetBookDetailsQuery,
-  useCreateBorrowMutation
+  useCreateBorrowMutation,
+  useUpdateBookMutation
 } = baseApi

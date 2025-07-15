@@ -7,6 +7,6 @@ export interface Book {
   description: string
   copies: number
   available: boolean
-  createdAt: string
-  updatedAt: string
+  // createdAt: string
+  // updatedAt: string
 }

@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Users } from "lucide-react";
 import { BorrowModal } from "@/components/BookDetails/BorrowModalForm";
+import { UpdateBookModal } from "@/components/BookDetails/UpdateModalForm";
 
 export default function BookDetails() {
   const params = useParams();
@@ -84,9 +85,7 @@ export default function BookDetails() {
           </div>
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-end">
-            <Button variant="secondary" className="w-full sm:w-auto">
-              Update Book
-            </Button>
+            <UpdateBookModal book={book}/>
             <Button variant="destructive" className="w-full sm:w-auto">
               Delete Book
             </Button>

@@ -2,9 +2,10 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, Edit2, Trash2, Users, View } from 'lucide-react';
+import { BookOpen, Trash2, Users, View } from 'lucide-react';
 import type { Book } from '@/types/books';
 import { useNavigate } from 'react-router';
+import { UpdateBookModal } from '../BookDetails/UpdateModalForm';
 
 interface BookCardProps {
   book: Book;
@@ -48,13 +49,13 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
   };
 
 
-  const handleUpdateBook = (id: string) => {
-    console.log(id);
-    // toast({
-    //     title: 'Update Book',
-    //     description: `Update functionality for "${book.title}" would be implemented here.`,
-    // });
-  };
+  // const handleUpdateBook = (id: string) => {
+  //   console.log(id);
+  //   // toast({
+  //   //     title: 'Update Book',
+  //   //     description: `Update functionality for "${book.title}" would be implemented here.`,
+  //   // });
+  // };
 
   const handleDeleteBook = (id: string) => {
     console.log(id);
@@ -101,14 +102,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
             >
               <View className="w-4 h-4" />
             </Button>
-            <Button
-              size="sm"
-              variant="secondary"
-              className="h-8 w-8 p-0 hover:bg-white cursor-pointer"
-              onClick={() => handleUpdateBook(book._id)}
-            >
-              <Edit2 className="w-4 h-4" />
-            </Button>
+            <UpdateBookModal book={book}/>
             <Button
               size="sm"
               variant="destructive"
