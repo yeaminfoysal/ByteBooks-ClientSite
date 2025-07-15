@@ -2,7 +2,8 @@ import App from "@/App";
 import AddBooks from "@/pages/AddBooks";
 import AllBooks from "@/pages/AllBooks";
 import BookDetails from "@/pages/BookDetails";
-import BorrowSummary from "@/pages/BorrowSummary";
+import { BorrowSummary } from "@/pages/BorrowSummary";
+// import BorrowSummary from "@/pages/BorrowSummary";
 import LandingPage from "@/pages/LandingPage";
 import {
     createBrowserRouter,

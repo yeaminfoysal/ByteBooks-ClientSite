@@ -20,21 +20,21 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [deleteBook] = useDeleteBookMutation();
 
-  const getBookColor = (title: string) => {
-    const colors = [
-      'from-rose-400 to-pink-600',
-      'from-blue-400 to-cyan-600',
-      'from-green-400 to-emerald-600',
-      'from-purple-400 to-violet-600',
-      'from-orange-400 to-red-600',
-      'from-indigo-400 to-blue-600',
-      'from-teal-400 to-cyan-600',
-      'from-amber-400 to-orange-600',
-    ];
+  // const getBookColor = (title: string) => {
+  //   const colors = [
+  //     'from-rose-400 to-pink-600',
+  //     'from-blue-400 to-cyan-600',
+  //     'from-green-400 to-emerald-600',
+  //     'from-purple-400 to-violet-600',
+  //     'from-orange-400 to-red-600',
+  //     'from-indigo-400 to-blue-600',
+  //     'from-teal-400 to-cyan-600',
+  //     'from-amber-400 to-orange-600',
+  //   ];
 
-    const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return colors[hash % colors.length];
-  };
+  //   const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  //   return colors[hash % colors.length];
+  // };
 
   const getIconColor = (title: string) => {
     const colors = [
@@ -75,37 +75,37 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
   };
 
   return (
-    <Card className="group relative overflow-hidden hover:shadow-2xl border-0">
-      <CardContent className="p-0">
-        {/* Book Image Placeholder */}
-        <div className="relative aspect-[1] overflow-hidden group-hover:scale-105 transition-all duration-200">
-          <div className={`absolute inset-0 bg-gradient-to-br ${getBookColor(book.title)} opacity-80 w-[85%] mx-auto rounded-lg`} />
+    <Card className="group hover:shadow-elegant transition-all duration-300  bg-gradient-card border-primary/20 relative overflow-hidden">
+      <CardContent className="p-0 h-[240px] flex-shrink-0 relative">
+        {/* Image Container */}
+        <div className="relative w-full h-full overflow-hidden">
+          {/* Background Gradient */}
+          <div className="absolute inset-0 bg-gradient-hero opacity-80 w-[85%] mx-auto rounded-lg" />
 
           {/* Book Icon */}
-          <div className="absolute top-12 right-12">
-            <BookOpen className={`w-48 h-30 ${getIconColor(book.title)} opacity-100`} />
+          <div className="absolute top-8 right-26">
+            <BookOpen className={`w-20 h-20 ${getIconColor(book.title)} opacity-100`} />
           </div>
 
-          {/* Book Title on Image */}
-          <div className="absolute top-34 inset-0 flex justify-center p-6 pt-12">
-            <h3 className=" text-xl text-white font-semibold text-center leading-tight drop-shadow-lg">
+          {/* Book Title */}
+          <div className="absolute inset-0 flex items-center justify-center px-6 pt-6 text-center">
+            <h3 className="text-lg font-semibold text-white leading-tight drop-shadow-lg">
               {book.title}
             </h3>
           </div>
 
-          {/* Action Buttons - Hidden by default, shown on hover */}
-          <div className="absolute top-4 left-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-x-2">
+          {/* Action Buttons */}
+          <div className="absolute top-4 left-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-x-2 z-10">
             <Button
               size="sm"
-              // variant="destructive"
-              className="h-8 w-8 p-0 bg-green-400/90 hover:bg-green-400 cursor-pointer"
+              className="h-8 w-8 p-0 bg-green-400/90 hover:bg-green-400"
               onClick={() => navigate(`books/${book._id}`)}
             >
               <View className="w-4 h-4" />
             </Button>
             <Button
               size="sm"
-              className="h-8 w-8 p-0 bg-blue-500/90 hover:bg-blue-500 cursor-pointer"
+              className="h-8 w-8 p-0 bg-blue-500/90 hover:bg-blue-500"
               onClick={() => setOpenUpdate(true)}
             >
               <Edit2 className="w-4 h-4 text-white" />
@@ -114,7 +114,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
             <Button
               size="sm"
               variant="destructive"
-              className="h-8 w-8 p-0 bg-red-500/90 hover:bg-red-500 cursor-pointer"
+              className="h-8 w-8 p-0 bg-red-500/90 hover:bg-red-500"
               onClick={() => handleDeleteBook(book._id)}
             >
               <Trash2 className="w-4 h-4" />
@@ -122,15 +122,14 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           </div>
 
           {/* Genre Badge */}
-          <div className="absolute bottom-4 right-8">
-            <Badge variant="secondary" className="">
-              {book.genre}
-            </Badge>
+          <div className="absolute bottom-4 right-8 z-10">
+            <Badge variant="secondary">{book.genre}</Badge>
           </div>
         </div>
       </CardContent>
 
-      <CardFooter className="p-6 flex-col space-y-3">
+
+      <CardFooter className="px-6 flex-col space-y-3">
         {/* Author */}
         <div className="w-full">
           <p className="text-sm text-muted-foreground">by {book.author}</p>

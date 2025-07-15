@@ -1,22 +1,115 @@
-import BorrowCard from "@/components/Borrow Summary/BorrowCard";
-import { useGetBorrowSummaryQuery } from "@/redux/api/baseApi";
-import type { Borrow } from "@/types/borrow";
-// import BorrowCard from "./BorrowCard";
 
-export default function BorrowSummary() {
-    const { data } = useGetBorrowSummaryQuery(undefined)
-    const books: Borrow[] = data?.data || []
-    console.log(books);
-    return (
-        <div className="w-full max-w-7xl mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {books.map((book, idx) => (
-                    <BorrowCard
-                        key={idx}
-                        book={book}
-                    />
+// import * as React from "react"
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+import type { ColumnDef } from "@tanstack/react-table"
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { useGetBorrowSummaryQuery } from "@/redux/api/baseApi"
+import type { Borrow } from "@/types/borrow"
+
+
+type BorrowRow = {
+  title: string
+  isbn: string
+  totalQuantity: number
+}
+
+export function BorrowSummary() {
+  const { data, isLoading, isFetching } = useGetBorrowSummaryQuery(undefined)
+  const books: Borrow[] = data?.data || []
+
+  // Transform to flat data for table
+  const rows: BorrowRow[] = books.map((b) => ({
+    title: b.book.title,
+    isbn: b.book.isbn,
+    totalQuantity: b.totalQuantity,
+  }))
+
+  const columns: ColumnDef<BorrowRow>[] = [
+    {
+      accessorKey: "title",
+      header: "Book Title",
+    },
+    {
+      accessorKey: "isbn",
+      header: "ISBN",
+    },
+    {
+      accessorKey: "totalQuantity",
+      header: "Total Borrowed",
+    },
+  ]
+
+  const table = useReactTable({
+    data: rows,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  })
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-4">Borrow Summary</h2>
+
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
                 ))}
-            </div>
-        </div>
-    )
+              </TableRow>
+            ))}
+          </TableHeader>
+          {isLoading || isFetching ? (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan={3} className="text-center py-10">
+                  Loading borrow summary...
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {table.getRowModel().rows.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center py-10">
+                    No data available.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          )}
+        </Table>
+      </div>
+    </div>
+  )
 }

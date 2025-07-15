@@ -20,6 +20,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCreateBorrowMutation } from "@/redux/api/baseApi";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 interface BorrowModalProps {
     bookId: string;
@@ -54,6 +55,13 @@ export function BorrowModal({ bookId, quantity, open, setOpen }: BorrowModalProp
         const res = await createBorrow(borrowData).unwrap();
         if (res.success) {
             setOpen(false);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Book borrowed successfull",
+                showConfirmButton: false,
+                timer: 1500
+            });
             navigate('/borrow-summary')
         }
     };

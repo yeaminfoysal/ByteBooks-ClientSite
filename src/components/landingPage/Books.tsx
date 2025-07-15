@@ -1,71 +1,35 @@
 
-import { Library } from 'lucide-react';
 import type { Book } from '@/types/books';
 import BookGrid from './BookGrid';
 import { useGetBooksQuery } from '@/redux/api/baseApi';
+import { Badge } from '../ui/badge';
 // import { useToast } from '@/hooks/use-toast';
 
-function App() {
+function Books() {
     const {
         data,
-        // isFetching,
-        // isLoading,
     } = useGetBooksQuery(undefined, {
-        // pollingInterval: 3000,
         refetchOnMountOrArgChange: true,
         skip: false,
     })
-    //   const [books, setBooks] = useState<Book[]>(sampleBooks);
-    //   const { toast } = useToast();
-    // console.log(data, isFetching, isLoading);
 
     const books: Book[] = data?.data || [];
 
     return (
-        <div className="min-h-screen ">
+        <div className=" ">
+            <div className="text-center">
+                <Badge variant="outline" className="mb-4 border-primary/20">
+                    Books
+                </Badge>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    Browse All Books
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                    From book cataloging to borrower management, our system provides all the tools you need.
+                </p>
+            </div>
 
-            {/* Stats */}
             <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
-                        <div className="flex items-center gap-4">
-                            <div className="bg-blue-100 p-3 rounded-full">
-                                <Library className="w-6 h-6 text-blue-600" />
-                            </div>
-                            <div>
-                                <p className="text-sm ">Total Books</p>
-                                <p className="text-2xl font-bold">{books.length}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
-                        <div className="flex items-center gap-4">
-                            <div className="bg-green-100 p-3 rounded-full">
-                                <Library className="w-6 h-6 text-green-600" />
-                            </div>
-                            <div>
-                                <p className="text-sm ">Total Copies</p>
-                                <p className="text-2xl font-bold">
-                                    {books.reduce((total, book) => total + book.copies, 0)}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
-                        <div className="flex items-center gap-4">
-                            <div className="bg-purple-100 p-3 rounded-full">
-                                <Library className="w-6 h-6 text-purple-600" />
-                            </div>
-                            <div>
-                                <p className="text-sm ">Unique Genres</p>
-                                <p className="text-2xl font-bold">
-                                    {new Set(books.map(book => book.genre)).size}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 {/* Book Grid */}
                 <BookGrid
                     books={books}
@@ -75,4 +39,4 @@ function App() {
     );
 }
 
-export default App;
+export default Books;
