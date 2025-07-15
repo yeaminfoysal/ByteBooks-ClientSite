@@ -41,6 +41,13 @@ export const baseApi = createApi({
         body: book
       }),
       invalidatesTags: ["Books"],
+    }),
+    deleteBook: builder.mutation({
+      query: (bookId) => ({
+        url: `/books/${bookId}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Books'],
     })
   }),
 })
@@ -54,5 +61,6 @@ export const {
   useGetBorrowSummaryQuery,
   useGetBookDetailsQuery,
   useCreateBorrowMutation,
-  useUpdateBookMutation
+  useUpdateBookMutation,
+  useDeleteBookMutation
 } = baseApi

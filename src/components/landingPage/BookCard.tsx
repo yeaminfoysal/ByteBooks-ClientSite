@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, Trash2, Users, View } from 'lucide-react';
+import { BookOpen, Edit2, Trash2, Users, View } from 'lucide-react';
 import type { Book } from '@/types/books';
 import { useNavigate } from 'react-router';
 import { UpdateBookModal } from '../BookDetails/UpdateModalForm';
+import Swal from 'sweetalert2';
+import { useDeleteBookMutation } from '@/redux/api/baseApi';
 
 interface BookCardProps {
   book: Book;
@@ -15,7 +17,9 @@ interface BookCardProps {
 
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const navigate = useNavigate();
-  // Generate dynamic colors based on book title
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [deleteBook] = useDeleteBookMutation();
+  
   const getBookColor = (title: string) => {
     const colors = [
       'from-rose-400 to-pink-600',
@@ -48,30 +52,27 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
     return colors[hash % colors.length];
   };
 
+  const handleDeleteBook = async (id: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
 
-  // const handleUpdateBook = (id: string) => {
-  //   console.log(id);
-  //   // toast({
-  //   //     title: 'Update Book',
-  //   //     description: `Update functionality for "${book.title}" would be implemented here.`,
-  //   // });
-  // };
-
-  const handleDeleteBook = (id: string) => {
-    console.log(id);
-    // const bookToDelete = books.find(b => b._id === bookId);
-    // setBooks(books.filter(book => book._id !== bookId));
-
-    // toast({
-    //     title: 'Book Deleted',
-    //     description: `"${bookToDelete?.title}" has been removed from the library.`,
-    //     variant: 'destructive',
-    // });
+      if (result.isConfirmed) {
+        await deleteBook(id).unwrap();
+        Swal.fire("Deleted!", "Your book has been deleted.", "success");
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Something went wrong while deleting the book.", "error");
+    }
   };
-  // const handleViewBook = (id) =>{
-
-  // }
-
 
   return (
     <Card className="group relative overflow-hidden hover:shadow-2xl border-0">
@@ -87,7 +88,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
 
           {/* Book Title on Image */}
           <div className="absolute top-34 inset-0 flex justify-center p-6 pt-12">
-            <h3 className=" text-xl font-semibold text-center leading-tight drop-shadow-lg">
+            <h3 className=" text-xl text-white font-semibold text-center leading-tight drop-shadow-lg">
               {book.title}
             </h3>
           </div>
@@ -102,7 +103,14 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
             >
               <View className="w-4 h-4" />
             </Button>
-            <UpdateBookModal book={book}/>
+            <Button
+              size="sm"
+              className="h-8 w-8 p-0 bg-blue-500/90 hover:bg-blue-500 cursor-pointer"
+              onClick={() => setOpenUpdate(true)}
+            >
+              <Edit2 className="w-4 h-4 text-white" />
+            </Button>
+            <UpdateBookModal book={book} open={openUpdate} setOpen={setOpenUpdate} />
             <Button
               size="sm"
               variant="destructive"

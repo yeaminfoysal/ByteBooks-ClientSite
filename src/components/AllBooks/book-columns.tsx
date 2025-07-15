@@ -1,17 +1,20 @@
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 // import { Checkbox } from "@/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
+// import {
+//   DropdownMenu,
+//   DropdownMenuTrigger,
+//   DropdownMenuContent,
+//   DropdownMenuLabel,
+//   DropdownMenuItem,
+//   DropdownMenuSeparator,
+// } from "@/components/ui/dropdown-menu"
 import type { ColumnDef } from "@tanstack/react-table"
 import type { Book } from "@/types/books"
-import { Link } from "react-router"
+// import { Link } from "react-router"
+// import { UpdateBookModal } from "../BookDetails/UpdateModalForm"
+// import { useState } from "react";
+import { ActionCell } from "./ActionCell"
 
 
 export const columns: ColumnDef<Book>[] = [
@@ -51,30 +54,6 @@ export const columns: ColumnDef<Book>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const book = row.original;
-      const id = book._id;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(book._id)}>
-              Copy Book ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link to={`/books/${id}`}>View Details</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>Edit Book</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
+    cell: ({ row }) => <ActionCell book={row.original} />,
+  }
 ]

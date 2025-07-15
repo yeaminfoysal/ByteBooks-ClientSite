@@ -1,17 +1,21 @@
-import { useGetBookDetailsQuery } from "@/redux/api/baseApi";
-import { useParams } from "react-router";
+import { useDeleteBookMutation, useGetBookDetailsQuery } from "@/redux/api/baseApi";
+import { useNavigate, useParams } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Users } from "lucide-react";
+import { BookOpen, Edit2, Users } from "lucide-react";
 import { BorrowModal } from "@/components/BookDetails/BorrowModalForm";
 import { UpdateBookModal } from "@/components/BookDetails/UpdateModalForm";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function BookDetails() {
   const params = useParams();
   const id = params.id;
   const { data, isFetching, isLoading } = useGetBookDetailsQuery({ id });
   const book = data?.data;
-  console.log(book);
+  const [deleteBook] = useDeleteBookMutation();
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const navigate = useNavigate()
 
   const getBookColor = (title: string) => {
     const colors = [
@@ -42,6 +46,31 @@ export default function BookDetails() {
     const hash = title?.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
     return colors[hash % colors.length];
   };
+
+  const handleDeleteBook = async (id: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        await deleteBook(id).unwrap();
+        Swal.fire("Deleted!", "Your book has been deleted.", "success");
+        await navigate("/")
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Something went wrong while deleting the book.", "error");
+    }
+  };
+
+
 
   if (isLoading || isFetching) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
 
@@ -85,8 +114,15 @@ export default function BookDetails() {
           </div>
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-end">
-            <UpdateBookModal book={book}/>
-            <Button variant="destructive" className="w-full sm:w-auto">
+            <Button
+              size="sm"
+              className="h-8 w-8 p-0 bg-blue-500/90 hover:bg-blue-500 cursor-pointer"
+              onClick={() => setOpenUpdate(true)}
+            >
+              <Edit2 className="w-4 h-4 text-white" />
+            </Button>
+            <UpdateBookModal book={book} open={openUpdate} setOpen={setOpenUpdate} />
+            <Button onClick={() => { handleDeleteBook(book._id) }} variant="destructive" className="w-full sm:w-auto">
               Delete Book
             </Button>
             <BorrowModal disable={!book?.available} bookId={book?._id} />
