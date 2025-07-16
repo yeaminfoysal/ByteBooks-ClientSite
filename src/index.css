@@ -121,9 +121,9 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   /* Dark theme gradients */
-  --gradient-primary: linear-gradient(135deg, hsl(264 100% 70%), hsl(264 100% 80%));
+  --gradient-primary: linear-gradient(135deg, hsl(264 100% 62%), hsl(264 100% 75%));
   --gradient-secondary: linear-gradient(135deg, hsl(217.2 32.6% 17.5%), hsl(222.2 84% 4.9%));
-  --gradient-hero: linear-gradient(135deg, hsl(264 100% 70%), hsl(285 100% 75%), hsl(310 100% 80%));
+  --gradient-hero: linear-gradient(135deg, hsl(264 100% 62%), hsl(285 100% 65%), hsl(310 100% 70%));
   --gradient-card: linear-gradient(135deg, hsl(222.2 84% 4.9%), hsl(217.2 32.6% 17.5%));
 
 
