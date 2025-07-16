@@ -1,115 +1,32 @@
+import BorrowStats from "@/components/BorrowSummary/BorrowStats";
+import BorrowSummaryTable from "@/components/BorrowSummary/BorrowSummaryTable";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { Link } from "react-router";
 
-// import * as React from "react"
-import {
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-import type { ColumnDef } from "@tanstack/react-table"
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { useGetBorrowSummaryQuery } from "@/redux/api/baseApi"
-import type { Borrow } from "@/types/borrow"
-
-
-type BorrowRow = {
-  title: string
-  isbn: string
-  totalQuantity: number
-}
 
 export function BorrowSummary() {
-  const { data, isLoading, isFetching } = useGetBorrowSummaryQuery(undefined)
-  const books: Borrow[] = data?.data || []
 
-  // Transform to flat data for table
-  const rows: BorrowRow[] = books.map((b) => ({
-    title: b.book.title,
-    isbn: b.book.isbn,
-    totalQuantity: b.totalQuantity,
-  }))
-
-  const columns: ColumnDef<BorrowRow>[] = [
-    {
-      accessorKey: "title",
-      header: "Book Title",
-    },
-    {
-      accessorKey: "isbn",
-      header: "ISBN",
-    },
-    {
-      accessorKey: "totalQuantity",
-      header: "Total Borrowed",
-    },
-  ]
-
-  const table = useReactTable({
-    data: rows,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  })
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-4">Borrow Summary</h2>
-
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          {isLoading || isFetching ? (
-            <TableBody>
-              <TableRow>
-                <TableCell colSpan={3} className="text-center py-10">
-                  Loading borrow summary...
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          ) : (
-            <TableBody>
-              {table.getRowModel().rows.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={3} className="text-center py-10">
-                    No data available.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          )}
-        </Table>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 mb-10">
+        <div>
+          <h1 className="text-3xl font-bold">Borrow Summary</h1>
+          <p className="text-muted-foreground">Track borrowing patterns and library usage</p>
+        </div>
+        <Button asChild className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
+          <Link to="/create-book">
+            <Plus className="mr-2 h-4 w-4" />
+            Add New Book
+          </Link>
+        </Button>
       </div>
+
+      <BorrowStats/>
+
+      <BorrowSummaryTable/>
     </div>
   )
 }
