@@ -63,7 +63,7 @@ export function BooksTable() {
     })
 
     return (
-        <div className="">
+        <div className="mt-6">
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter by title..."

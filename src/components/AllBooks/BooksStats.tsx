@@ -1,55 +1,55 @@
 import { useGetBooksQuery } from "@/redux/api/baseApi";
 import type { Book } from "@/types/books";
-import { Library } from "lucide-react";
+import { BookOpen } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Badge } from "../ui/badge";
 
 export default function BooksStats() {
-  const { data } = useGetBooksQuery(undefined);
-  const books: Book[] = data?.data || []; // ← FIXED
+    const { data } = useGetBooksQuery(undefined);
+    const books: Book[] = data?.data || []; // ← FIXED
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      {/* Total Books */}
-      <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
-        <div className="flex items-center gap-4">
-          <div className="bg-blue-100 p-3 rounded-full">
-            <Library className="w-6 h-6 text-blue-600" />
-          </div>
-          <div>
-            <p className="text-sm ">Total Books</p>
-            <p className="text-2xl font-bold">{books.length}</p>
-          </div>
-        </div>
-      </div>
+    return (
+        <>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card className="bg-gradient-card border-primary">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                        <CardTitle className="text-sm font-medium">Total Books</CardTitle>
+                        <BookOpen className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent className="-mt-4">
+                        <div className="text-2xl font-bold text-primary">{books.length}</div>
+                        <p className="text-xs text-muted-foreground">In collection</p>
+                    </CardContent>
+                </Card>
 
-      {/* Total Copies */}
-      <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
-        <div className="flex items-center gap-4">
-          <div className="bg-green-100 p-3 rounded-full">
-            <Library className="w-6 h-6 text-green-600" />
-          </div>
-          <div>
-            <p className="text-sm ">Total Copies</p>
-            <p className="text-2xl font-bold">
-              {books.reduce((total, book) => total + book.copies, 0)}
-            </p>
-          </div>
-        </div>
-      </div>
+                <Card className="bg-gradient-card border-primary">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 ">
+                        <CardTitle className="text-sm font-medium">Total Copies</CardTitle>
+                        <Badge variant="secondary" className="bg-green-100 text-green-800">
+                           {books.reduce((total, book) => total + book.copies, 0)}
+                        </Badge>
+                    </CardHeader>
+                    <CardContent className="-mt-4">
+                        <div className="text-2xl font-bold text-green-600">{books.reduce((total, book) => total + book.copies, 0)}</div>
+                        <p className="text-xs text-muted-foreground">Ready to borrow</p>
+                    </CardContent>
+                </Card>
 
-      {/* Unique Genres */}
-      <div className="bg-white dark:bg-[#141414] rounded-lg p-6 shadow-sm">
-        <div className="flex items-center gap-4">
-          <div className="bg-purple-100 p-3 rounded-full">
-            <Library className="w-6 h-6 text-purple-600" />
-          </div>
-          <div>
-            <p className="text-sm ">Unique Genres</p>
-            <p className="text-2xl font-bold">
-              {new Set(books.map((book) => book.genre)).size}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+                <Card className="bg-gradient-card border-primary">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 ">
+                        <CardTitle className="text-sm font-medium">Unique Genres</CardTitle>
+                        <Badge variant="secondary" className="bg-orange-100 text-orange-800">
+                           {new Set(books.map((book) => book.genre)).size}
+                        </Badge>
+                    </CardHeader>
+                    <CardContent className="-mt-4">
+                        <div className="text-2xl font-bold text-orange-600">{new Set(books.map((book) => book.genre)).size}</div>
+                        <p className="text-xs text-muted-foreground">Currently out</p>
+                    </CardContent>
+                </Card>
+            </div>
+
+        </>
+    );
 }

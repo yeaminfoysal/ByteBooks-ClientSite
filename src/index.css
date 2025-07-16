@@ -44,7 +44,7 @@
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: #020817;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -83,7 +83,7 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #020817;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -131,7 +131,12 @@
     @apply bg-background text-foreground;
   }
 }
-
+.text-primary{
+  color: #a366ff;
+}
+.border-primary{
+  border: 1px solid #a366ff37;
+}
 /* Custom Backgrounds */
 .bg-gradient-primary {
   background-image: var(--gradient-primary);
