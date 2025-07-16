@@ -107,7 +107,6 @@ react-day-picker
 react-hook-form
 react-redux
 react-router
-sonner
 sweetalert2
 tailwind-merge
 tailwindcss
