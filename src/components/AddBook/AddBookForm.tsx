@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useCreateBookMutation } from "@/redux/api/baseApi"
 import { useNavigate } from "react-router"
+import { BookOpen } from "lucide-react"
 
 // ✅ Define form validation schema with Zod
 const formSchema = z.object({
@@ -82,105 +83,123 @@ export function AddBooksForm() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {/** Title */}
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Book title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <div className="bg-gradient-card border-primary shadow-elegant p-8 rounded-xl">
+      <div className="flex items-center space-x-2 mb-4">
+        <BookOpen className="h-5 w-5 text-primary" />
+        <span>Book Information</span>
+      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
-        {/** Description */}
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input placeholder="Book description" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        {/** Author */}
-        <FormField
-          control={form.control}
-          name="author"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Author</FormLabel>
-              <FormControl>
-                <Input placeholder="Book author" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            {/** Title */}
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input className="w-full bg-primary" placeholder="Book title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        {/** Genre */}
-        <FormField
-          control={form.control}
-          name="genre"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Genre</FormLabel>
-              <FormControl>
-                <Input placeholder="Book genre" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            {/** Author */}
+            <FormField
+              control={form.control}
+              name="author"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Author</FormLabel>
+                  <FormControl>
+                    <Input className="w-full bg-primary"  placeholder="Book author" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-        {/** ISBN */}
-        <FormField
-          control={form.control}
-          name="isbn"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>ISBN</FormLabel>
-              <FormControl>
-                <Input placeholder="Book ISBN" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        {/** Copies */}
-        <FormField
-          control={form.control}
-          name="copies"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Copies</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Number of copies"
-                  {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            {/** Description */}
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input className="w-full bg-primary"  placeholder="Book description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+            {/** Genre */}
+            <FormField
+              control={form.control}
+              name="genre"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Genre</FormLabel>
+                  <FormControl>
+                    <Input className="w-full bg-primary" placeholder="Book genre" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {/** ISBN */}
+            <FormField
+              control={form.control}
+              name="isbn"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ISBN</FormLabel>
+                  <FormControl>
+                    <Input className="w-full bg-primary" placeholder="Book ISBN" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/** Copies */}
+            <FormField
+              control={form.control}
+              name="copies"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Copies</FormLabel>
+                  <FormControl>
+                    <Input className="w-full bg-primary" 
+                      type="number"
+                      placeholder="Number of copies"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <Button className="bg-gradient-primary hover:shadow-glow transition-all duration-300 flex-1" type="submit">
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </div>
   )
 }
