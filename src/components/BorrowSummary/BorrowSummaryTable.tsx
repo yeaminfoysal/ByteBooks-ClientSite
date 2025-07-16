@@ -60,7 +60,7 @@ export default function BorrowSummaryTable() {
     getCoreRowModel: getCoreRowModel(),
   })
     return (
-        <div className="rounded-md border mt-10">
+        <div className="rounded-md border mt-10 p-6 bg-gradient-card border-primary">
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (

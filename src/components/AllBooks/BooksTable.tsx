@@ -63,8 +63,8 @@ export function BooksTable() {
     })
 
     return (
-        <div className="mt-6">
-            <div className="flex items-center py-4">
+        <div className="mt-6 bg-gradient-card px-6 py-6 rounded-xl border-primary">
+            <div className="flex items-center mb-6">
                 <Input
                     placeholder="Filter by title..."
                     value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}

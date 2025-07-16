@@ -2,52 +2,23 @@ import { useDeleteBookMutation, useGetBookDetailsQuery } from "@/redux/api/baseA
 import { useNavigate, useParams } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Edit2, Users } from "lucide-react";
+import { Edit2, Users } from "lucide-react";
 import { BorrowModal } from "@/components/BookDetails/BorrowBookModalForm";
 import { UpdateBookModal } from "@/components/BookDetails/UpdateBookModalForm";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import type { Book } from "@/types/books";
+import booksFeature from '@/assets/books-feature.jpg';
 
 export default function BookDetails() {
   const params = useParams();
   const id = params.id;
   const { data, isFetching, isLoading } = useGetBookDetailsQuery({ id });
-  const book:Book = data?.data;
+  const book: Book = data?.data;
   const [deleteBook] = useDeleteBookMutation();
   const [openUpdate, setOpenUpdate] = useState(false);
   const navigate = useNavigate()
   const [openBorrow, setOpenBorrow] = useState(false)
-
-  const getBookColor = (title: string) => {
-    const colors = [
-      "from-rose-400 to-pink-600",
-      "from-blue-400 to-cyan-600",
-      "from-green-400 to-emerald-600",
-      "from-purple-400 to-violet-600",
-      "from-orange-400 to-red-600",
-      "from-indigo-400 to-blue-600",
-      "from-teal-400 to-cyan-600",
-      "from-amber-400 to-orange-600",
-    ];
-    const hash = title?.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
-    return colors[hash % colors.length];
-  };
-
-  const getIconColor = (title: string) => {
-    const colors = [
-      "text-rose-200",
-      "text-blue-200",
-      "text-green-200",
-      "text-purple-200",
-      "text-orange-200",
-      "text-indigo-200",
-      "text-teal-200",
-      "text-amber-200",
-    ];
-    const hash = title?.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
-    return colors[hash % colors.length];
-  };
 
   const handleDeleteBook = async (id: string) => {
     try {
@@ -72,27 +43,19 @@ export default function BookDetails() {
     }
   };
 
-
-
-  if (isLoading || isFetching) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+  if (isLoading || isFetching) return <p className="text-center mt-10 text-gray-500 min-h-screen">Loading...</p>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 py-14 space-y-6">
       {/* Book Card */}
-      <Card className="flex flex-col md:flex-row overflow-hidden shadow-xl rounded-2xl">
+      <Card className="flex bg-gradient-card border-primary flex-col md:flex-row overflow-hidden shadow-xl rounded-2xl">
         {/* Left Section - Visual */}
-        <div className="relative md:w-1/3 w-full h-80">
-          <div
-            className={`absolute inset-0 bg-gradient-to-br ${getBookColor(
-              book?.title
-            )} opacity-90 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none`}
+        <div className={`relative md:w-1/3 w-full `}>
+          <img
+            src={booksFeature}
+            alt={booksFeature}
+            className="w-full h-80 object-cover rounded-lg group-hover:opacity-100 transition-opacity"
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <BookOpen className={`w-44 h-44 ${getIconColor(book?.title)} opacity-90`} />
-          </div>
-          <div className="absolute bottom-4 w-full text-center px-4">
-            <h3 className="text-white text-xl font-bold drop-shadow">{book?.title}</h3>
-          </div>
         </div>
 
         {/* Right Section - Content */}
@@ -110,7 +73,7 @@ export default function BookDetails() {
           <div className="mt-auto flex flex-col gap-2 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              <span>{book?.copies ? "Available" : "Not Available"} – {book?.copies} copies</span>
+              <span>{book?.available ? "Available" : "Not Available"} – {book?.copies} copies</span>
             </div>
             <div>ISBN: {book?.isbn}</div>
           </div>

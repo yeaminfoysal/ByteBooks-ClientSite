@@ -27,9 +27,8 @@ export default function CTASection() {
                         </Button>
                         <Button
                             asChild
-                            variant="outline"
                             size="lg"
-                            className="border-white text-white hover:bg-white/10"
+                            className="bg-transparent text-white border border-white  hover:bg-white/10"
                         >
                             <Link to="/borrow-summary">View Demo</Link>
                         </Button>

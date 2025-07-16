@@ -71,7 +71,7 @@ export function BorrowModal({ bookId, quantity, open, setOpen }: BorrowModalProp
             {/* <DialogTrigger asChild>
                 <Button disabled={disable} variant="outline">Borrow</Button>
             </DialogTrigger> */}
-            <DialogContent>
+            <DialogContent className="bg-gradient-card border-primary">
                 <DialogHeader>
                     <DialogTitle>Borrow Book</DialogTitle>
                 </DialogHeader>
@@ -128,7 +128,7 @@ export function BorrowModal({ bookId, quantity, open, setOpen }: BorrowModalProp
                 </div>
 
                 <DialogFooter>
-                    <Button onClick={handleSubmit}>Confirm Borrow</Button>
+                    <Button className=" text-black dark:text-white" onClick={handleSubmit}>Confirm Borrow</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

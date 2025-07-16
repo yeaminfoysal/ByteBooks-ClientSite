@@ -1,4 +1,4 @@
-import { BookOpen, Github, Heart } from 'lucide-react';
+import { BookOpen, Github } from 'lucide-react';
 import { Link } from 'react-router';
 
 export function Footer() {
@@ -68,7 +68,7 @@ export function Footer() {
             </p>
             <div className="flex items-center space-x-4">
               <a
-                href="https://github.com"
+                href="https://github.com/yeaminfoysal"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -84,8 +84,7 @@ export function Footer() {
             © 2025 ByteBooks. Built with React & TypeScript.
           </p>
           <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-            <span>Made with</span>
-            <Heart className="h-4 w-4 text-red-500" />
+            <span>Made by Yeamin Foysal</span>
             <span>for modern libraries</span>
           </div>
         </div>

@@ -61,7 +61,7 @@ export function UpdateBookModal({ book, open, setOpen }: IBook) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
+      <DialogContent className="bg-gradient-card border-primary">
         <DialogHeader>
           <DialogTitle>Update Book</DialogTitle>
         </DialogHeader>
@@ -123,7 +123,7 @@ export function UpdateBookModal({ book, open, setOpen }: IBook) {
           </div>
 
           <DialogFooter>
-            <Button type="submit">Update Book</Button>
+            <Button className="dark:text-white text-black cursor-pointer" type="submit">Update Book</Button>
           </DialogFooter>
         </form>
       </DialogContent>
