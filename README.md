@@ -1,6 +1,6 @@
 # 📚 ByteBooks — Minimal Library Management System
 
-ByteBooks is a **minimalist library management system** built using **React**, **TypeScript**, **RTK Query**, and **Tailwind CSS**. It allows users to perform basic book management and borrowing operations through a simple, elegant interface—**no authentication or categories required**.
+ByteBooks is a **modern library management system** built using **React**, **TypeScript**, **Redux**, **RTK Query**, and **Tailwind CSS**. This project allows users to manage books and track borrowed items with a smooth, type-safe frontend and a modular Node.js + MongoDB backend.
 
 ---
 
@@ -19,8 +19,9 @@ ByteBooks is a **minimalist library management system** built using **React**, *
 - All features are accessible without logging in.
 
 ### 📘 Book Management
-- View a list of all books
-- Add, edit, delete, and borrow books
+- View a **dynamic book list** (title, author, genre, ISBN, availability, etc.)
+- **Create**, **Edit**, and **Delete** books
+- Mark books as **unavailable** if copies reach 0
 - Responsive, searchable, and clean book table with:
   - **Title**, **Author**, **Genre**, **ISBN**, **Copies**, **Availability**, and **Actions**
 
@@ -30,10 +31,8 @@ ByteBooks is a **minimalist library management system** built using **React**, *
 - Update availability automatically
 
 ### 📊 Borrow Summary
-- Aggregated table showing:
-  - **Book Title**
-  - **ISBN**
-  - **Total Quantity Borrowed**
+- Aggregated view: Book Title, ISBN, Quantity Borrowed
+- Fetch from backend aggregation API
 
 ### 💅 Modern UI
 - Fully responsive and minimalistic interface
@@ -83,7 +82,7 @@ ByteBooks is a **minimalist library management system** built using **React**, *
 | Styling          | Tailwind CSS + Radix UI       |
 | Icons            | Lucide-react                  |
 | Date Handling    | date-fns                      |
-| Backend          | Node.js + Express (suggested) |
+| Backend          | Node.js + Express             |
 | Database         | MongoDB + Mongoose            |
 
 ---
